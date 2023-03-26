@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
     <meta name ="viewport" content="width=device-width, initial-scale=1">
     <title>AI-onebite</title>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <link rel="stylesheet" type="text/css" href="css/style.css">
-    <link rel="stylesheet" type="text/css" href="css/binggle.css">
+    <link rel="stylesheet" type="text/css" href="css/how.css">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -18,11 +17,10 @@
 </head>
 <body>
     <header>
-        <a href="#" class="logo">0100000101001001</a>
+        <a href="index.html" class="logo">0100000101001001</a>
         <ul class="navlist">
             <li><a href="index.html">Home</a></li>
-            <li><a href="What.html">What</a></li
-            <li><a href="How.html">How</a></li>
+            <li><a href="What.html">What</a></li>
             <li><a href="History.html">History</a></li>
             <li><a href="Opinion.html">Opinion</a></li>
             <li><a href="Application.html">Application</a></li>
@@ -30,18 +28,116 @@
 
         <div class="bx bx-menu" id="menu-icon"></div>
     </header>
-    <section class="hero">
-        <body>
-            what is ai
-            ai's issue
-            
-    
-            <script src="index.js"></script>
-          </body>
+    <div class="topic">Development Process of AI</div>
+    <div class="wrapper">
+      <i id="left" class="fa-solid fa-angle-left"></i>
+      <div class="carousel">
+        <img src="./historyimg/turingtest.gif" alt="img" draggable="false">
+        <img src="typeofai.png" alt="img" draggable="false">
+        <img src="chatgpt.png" alt="img" draggable="false">
+        <img src="AI.png" alt="img" draggable="false">
+      </div>
+      <i id="right" class="fa-solid fa-angle-right"></i>
+    </div>
+    <div class="passage">
+        <div class="box">
+            <div class="description">
+                <p>영국의 수학자, 논리학자인 앨런 튜링을 소개하면 그는 세계 2차 대전 때 독일군의 에니그마라는 암호기를 해독하여 연합군을 승리를 이끌었습니다. 1950년에 튜링은 [계산 기계와 지성 / "Computing Machinery and Intelligence]이라는 제목으로 논문을 발표하였고, 이를 통해 컴퓨터가 사람처럼 생각할 수 있다는 의견을 제시하였습니다.튜링은 컴퓨터와 대화를 나누어서 컴퓨터의 반응을 인간과 구별할 수 없다면 해당 컴퓨터가 사고(인식, 판단 능력 기준) 할 수 있는 것으로 간주하여야 한다고 주장하였습니다.</p>
+                <p class="hide">또다른 인공지능의 개척자라고 불리우는 분은 미국의 컴퓨터 과학자이자 수학자인 존 매카시 교수입니다. 그는 1956년 미국 다트머스에서 열린 학회에서 ‘인공지능‘ 이라는 용어를 처음 사용하였고, 인공지능의 기본 컴퓨터 언어인 ’리스프‘를 개발하였습니다.</p>
+            </div>
+        </div>
+    </div>
+  </body>
+  <script>
+    const carousel = document.querySelector(".carousel"),
+    firstImg = carousel.querySelectorAll("img")[0],
+    arrowIcons = document.querySelectorAll(".wrapper i");
+    const arrows = document.querySelectorAll(".wrapper i");
+    let currentIndex = 0;
+    let isDragStart = false, isDragging = false, prevPageX, prevScrollLeft, positionDiff;
+    const showHideIcons = () => {
+        // showing and hiding prev/next icon according to carousel scroll left value
+        let scrollWidth = carousel.scrollWidth - carousel.clientWidth; // getting max scrollable width
+        arrowIcons[0].style.display = carousel.scrollLeft == 0 ? "none" : "block";
+        arrowIcons[1].style.display = carousel.scrollLeft == scrollWidth ? "none" : "block";
+    }
+    arrowIcons.forEach(icon => {
+        icon.addEventListener("click", () => {
+            let firstImgWidth = firstImg.clientWidth + 14; // getting first img width & adding 14 margin value
 
-    </section>
-    <script>
+            // if clicked icon is left, reduce width value from the carousel scroll left else add to it
+            carousel.scrollLeft += icon.id == "left" ? -firstImgWidth : firstImgWidth;
+            setTimeout(() => showHideIcons(), 60); // calling showHideIcons after 60ms
+        });
+    });
+    const autoSlide = () => {
+        // if there is no image left to scroll then return from here
+        if(carousel.scrollLeft - (carousel.scrollWidth - carousel.clientWidth) > -1 || carousel.scrollLeft <= 0) return;
+        positionDiff = Math.abs(positionDiff); // making positionDiff value to positive
+        let firstImgWidth = firstImg.clientWidth + 14;
+        // getting difference value that needs to add or reduce from carousel left to take middle img center
+        let valDifference = firstImgWidth - positionDiff;
+        if(carousel.scrollLeft > prevScrollLeft) { // if user is scrolling to the right
+            return carousel.scrollLeft += positionDiff > firstImgWidth / 3 ? valDifference : -positionDiff;
+        }
+        // if user is scrolling to the left
+        carousel.scrollLeft -= positionDiff > firstImgWidth / 3 ? valDifference : -positionDiff;
+    }
+    const dragStart = (e) => {
+        // updatating global variables value on mouse down event
+        isDragStart = true;
+        prevPageX = e.pageX || e.touches[0].pageX;
+        prevScrollLeft = carousel.scrollLeft;
+    }
+    const dragging = (e) => {
+        // scrolling images/carousel to left according to mouse pointer
+        if(!isDragStart) return;
+        e.preventDefault();
+        isDragging = true;
+        carousel.classList.add("dragging");
+        positionDiff = (e.pageX || e.touches[0].pageX) - prevPageX;
+        carousel.scrollLeft = prevScrollLeft - positionDiff;
+        showHideIcons();
+    }
+    const dragStop = () => {
+        isDragStart = false;
+        carousel.classList.remove("dragging");
+        if(!isDragging) return;
+        isDragging = false;
+        autoSlide();
+    }
+    arrows.forEach(arrow => {
+  arrow.addEventListener("click", () => {
+    if (arrow.id === "left") {
+      currentIndex--;
+    } else if (arrow.id === "right") {
+      currentIndex++;
+    }
+    showParagraph(currentIndex);
+  });
+});
 
-    </script>
-</body>
+function showParagraph(index) {
+  const paragraphs = document.querySelectorAll(".description p");
+  if (index < 0) {
+    currentIndex = paragraphs.length - 1;
+  } else if (index >= paragraphs.length) {
+    currentIndex = 0;
+  }
+  paragraphs.forEach((paragraph, i) => {
+    if (i === currentIndex) {
+      paragraph.style.display = "block";
+    } else {
+      paragraph.style.display = "none";
+    }
+  });
+}
+    carousel.addEventListener("mousedown", dragStart);
+    carousel.addEventListener("touchstart", dragStart);
+    document.addEventListener("mousemove", dragging);
+    carousel.addEventListener("touchmove", dragging);
+    document.addEventListener("mouseup", dragStop);
+    carousel.addEventListener("touchend", dragStop);
+
+  </script>
 </html>

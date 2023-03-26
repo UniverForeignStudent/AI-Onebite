@@ -96,7 +96,7 @@ body{
 }
 
 .card__btn{
-  background-color: var(--color);
+  background-color: #51C087;
   color: #fff;
   font-size: 1rem;
   text-transform: uppercase;
