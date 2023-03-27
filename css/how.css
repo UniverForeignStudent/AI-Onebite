@@ -23,6 +23,9 @@ body{
     font-size: 30px;
     color: white;
 }
+.trans{
+    background: transparent;
+}
 .hide{
     display: none;
 }
